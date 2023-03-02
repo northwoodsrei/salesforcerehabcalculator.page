@@ -11,7 +11,7 @@
           </apex:column>
           <apex:column headerValue="Level of Work" styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Soft_Costs__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theSoftCosts, totalCostPanel" />
+              <apex:actionSupport event="onchange" rerender="theSoftCosts" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -39,8 +39,8 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Demo__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theDemoCosts, totalCostPanel" />
-              <apex:selectOption itemLabel="None" itemValue="0" />
+              <apex:actionSupport event="onchange" rerender="theDemoCosts" />
+              <apex:selectOption itemLabel="None" itemValue="0"/>
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
               <apex:selectOption itemLabel="High" itemValue="High" />
@@ -64,6 +64,7 @@
           </apex:column>
         </tr>
       </apex:pageBlockTable>
+      
       
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
@@ -194,7 +195,7 @@
             </apex:selectList>
           </apex:column>
           <apex:column styleClass="units" width="75">
-              <apex:inputText value="{!Opportunity.Windows__c}" size="3" onchange="updateCost(this);" />
+              <apex:inputText value="{!Opportunity.of_Windows_num__c}" size="3" onchange="updateCost(this);" />
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theWindowCosts">
@@ -607,7 +608,7 @@
             </apex:selectList>
           </apex:column>
           <apex:column styleClass="units" width="75">
-            <apex:inputText value="{!Opportunity.Interior_Doors__c}" size="3" onchange="updateCost(this);" />
+            <apex:inputText value="{!Opportunity.of_Interior_Doors_num__c}" size="3" onchange="updateCost(this);" />
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theInteriorDoorCosts">
@@ -636,7 +637,7 @@
             </apex:selectList>
           </apex:column>
           <apex:column styleClass="units" width="75">
-            <apex:inputText value="{!Opportunity.Exterior_Doors__c}" size="3" onchange="updateCost(this);" />
+            <apex:inputText value="{!Opportunity.of_Exterior_Doors_num__c}" size="3" onchange="updateCost(this);" />
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theExteriorDoorCosts">
@@ -736,25 +737,25 @@
           </apex:column>
         </tr>
       </apex:pageBlockTable>
-      
+    <apex:actionRegion >
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
-          <apex:column styleClass="item" width="75">
+          <apex:column styleClass="item" width="75"> 
           </apex:column>
           <apex:column styleClass="level" width="75">
           </apex:column>
           <apex:column style="text-align: right" width="75">
-              <apex:outputLabel value="Total:"/>
+            <apex:outputLabel value="Total:"/>
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="totalCostPanel">
-              <apex:outputText value="Total_Rehab__c"
+              <apex:outputText value="total">
               </apex:outputText>
             </apex:outputPanel>
-            <apex:actionSupport event="onchange" rerender="totalCostPanel" />
           </apex:column>
         </tr>
       </apex:pageBlockTable>
+     </apex:actionRegion>
     </apex:pageBlock>
   </apex:form>
 <script>
