@@ -1,5 +1,30 @@
 <apex:page standardController="Opportunity">
   <apex:form >
+    <apex:variable var="totalSoftCosts" value="{!IF(Opportunity.Soft_Costs__c == 'Low', 1500, IF(Opportunity.Soft_Costs__c == 'Medium', 3000, IF(Opportunity.Soft_Costs__c == 'High', 5000, 0)))}" />
+    <apex:variable var="totalDemoCosts" value="{!IF(Opportunity.Demo__c == 'Low', ROUND(Opportunity.Sqft__c * 2.0,0), IF(Opportunity.Demo__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Demo__c == 'High', ROUND(Opportunity.Sqft__c * 4.0,0), 0)))}" />
+    <apex:variable var="totalFoundationCosts" value="{!IF(Opportunity.Foundation__c == 'Low', ROUND(Opportunity.Sqft__c * 1.5,0), IF(Opportunity.Foundation__c == 'Medium', ROUND(Opportunity.Sqft__c * 4.5,0), IF(Opportunity.Foundation__c == 'High', ROUND(Opportunity.Sqft__c * 15.0,0), 0)))}" />
+    <apex:variable var="totalRoofCosts" value="{!IF(Opportunity.Roof__c == 'Low', 1000, IF(Opportunity.Roof__c == 'Medium', 8000, IF(Opportunity.Roof__c == 'High', 15000, 0)))}" />
+    <apex:variable var="totalGutterCosts" value="{!IF(Opportunity.Gutters__c == 'Low', 500, IF(Opportunity.Gutters__c == 'Medium', 1500, IF(Opportunity.Gutters__c == 'High', 3000, 0)))}" />
+    <apex:variable var="totalHVACandWaterHeaterCosts" value="{!IF(Opportunity.HVAC_and_Water_Heater__c  == 'Low', 2000, IF(Opportunity.HVAC_and_Water_Heater__c  == 'Medium', 3500, IF(Opportunity.HVAC_and_Water_Heater__c  == 'High', 8000, 0)))}" />
+    <apex:variable var="totalWindowCosts" value="{!IF(Opportunity.Windows__c  == 'Low', 400 * Opportunity.of_Windows_num__c, IF(Opportunity.Windows__c  == 'Medium',  800 * Opportunity.of_Windows_num__c, IF(Opportunity.Windows__c  == 'High',  1200 * Opportunity.of_Windows_num__c, 0)))}" />
+    <apex:variable var="totalInsulationCosts" value="{!IF(Opportunity.Insulation__c == 'Low', ROUND(Opportunity.Sqft__c * 1.0,0), IF(Opportunity.Insulation__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Insulation__c == 'High', ROUND(Opportunity.Sqft__c * 5.0,0), 0)))}" />
+    <apex:variable var="totalSidingCosts" value="{!IF(Opportunity.Siding__c == 'Low', ROUND(Opportunity.Sqft__c * 0.8,0), IF(Opportunity.Siding__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Siding__c == 'High', ROUND(Opportunity.Sqft__c * 6.0,0), 0)))}" />
+    <apex:variable var="totalConcreteCosts" value="{!IF(Opportunity.Concrete__c == 'Low', 1500, IF(Opportunity.Concrete__c == 'Medium', 4000, IF(Opportunity.Concrete__c == 'High', 10000, 0)))}" />
+    <apex:variable var="totalElectricalCosts" value="{!IF(Opportunity.Electrical__c == 'Low', ROUND(Opportunity.Sqft__c * 2.0,0), IF(Opportunity.Electrical__c == 'Medium', ROUND(Opportunity.Sqft__c * 4.0,0), IF(Opportunity.Electrical__c == 'High', ROUND(Opportunity.Sqft__c * 9.0,0), 0)))}" />
+    <apex:variable var="totalPlumbingCosts" value="{!IF(Opportunity.Plumbing__c == 'Low', ROUND(Opportunity.Sqft__c * 1.25,0), IF(Opportunity.Plumbing__c == 'Medium', ROUND(Opportunity.Sqft__c * 2.5,0), IF(Opportunity.Plumbing__c == 'High', ROUND(Opportunity.Sqft__c * 4.5,0), 0)))}" />
+    <apex:variable var="totalFramingCosts" value="{!IF(Opportunity.Framing__c == 'Low', ROUND(Opportunity.Sqft__c * 2.5,0), IF(Opportunity.Framing__c == 'Medium', ROUND(Opportunity.Sqft__c * 5.0,0), IF(Opportunity.Framing__c == 'High', ROUND(Opportunity.Sqft__c * 10.0,0), 0)))}" />
+    <apex:variable var="totalSheetrockCosts" value="{!IF(Opportunity.Sheetrock__c == 'Low', ROUND(Opportunity.Sqft__c * 1.5,0), IF(Opportunity.Sheetrock__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Sheetrock__c == 'High', ROUND(Opportunity.Sqft__c * 6.0,0), 0)))}" />
+    <apex:variable var="totalFlooringCosts" value="{!IF(Opportunity.Flooring__c == 'Low', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Flooring__c == 'Medium', ROUND(Opportunity.Sqft__c * 9.0,0), IF(Opportunity.Flooring__c == 'High', ROUND(Opportunity.Sqft__c * 15.0,0), 0)))}" />
+    <apex:variable var="totalBathCosts" value="{!IF(Opportunity.Baths__c == 'Low', 2500 * VALUE(Opportunity.Bath__c), IF(Opportunity.Baths__c == 'Medium', 5000 * VALUE(Opportunity.Bath__c), IF(Opportunity.Baths__c == 'High', 10000 * VALUE(Opportunity.Bath__c), 0)))}" />
+    <apex:variable var="totalGarageCosts" value="{!IF(Opportunity.Garage_Doors__c == 'Low', 800 * Opportunity.Garage__c, IF(Opportunity.Garage_Doors__c == 'Medium', 1200 * Opportunity.Garage__c, IF(Opportunity.Garage_Doors__c == 'High', 2000 * Opportunity.Garage__c, 0)))}" />
+    <apex:variable var="totalKitchenCosts" value="{!IF(Opportunity.Kitchen__c == 'Low', 7000, IF(Opportunity.Kitchen__c == 'Medium', 15000, IF(Opportunity.Kitchen__c == 'High', 25000, 0)))}" />
+    <apex:variable var="totalInteriorPaint" value="{!IF(Opportunity.Interior_Paint__c == 'Low', ROUND(Opportunity.Sqft__c * 2.0,0), IF(Opportunity.Interior_Paint__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.5,0), IF(Opportunity.Interior_Paint__c == 'High', ROUND(Opportunity.Sqft__c * 4.5,0), 0)))}" />
+    <apex:variable var="totalExteriorPaint" value="{!IF(Opportunity.Exterior_Paint__c == 'Low', ROUND(Opportunity.Sqft__c * 1.75,0), IF(Opportunity.Exterior_Paint__c == 'Medium', ROUND(Opportunity.Sqft__c * 3.0,0), IF(Opportunity.Exterior_Paint__c == 'High', ROUND(Opportunity.Sqft__c * 4.0,0), 0)))}" />
+    <apex:variable var="totalInteriorDoorCosts" value="{!IF(Opportunity.Interior_Doors__c  == 'Low', 200 * Opportunity.of_Interior_Doors_num__c, IF(Opportunity.Interior_Doors__c  == 'Medium', 250 * Opportunity.of_Interior_Doors_num__c, IF(Opportunity.Interior_Doors__c  == 'High', 350 * Opportunity.of_Interior_Doors_num__c, 0)))}" />
+    <apex:variable var="totalExteriorDoorCosts" value="{!IF(Opportunity.Exterior_Doors__c  == 'Low', 800 * Opportunity.of_Exterior_Doors_num__c, IF(Opportunity.Exterior_Doors__c  == 'Medium', 1200 * Opportunity.of_Exterior_Doors_num__c, IF(Opportunity.Exterior_Doors__c  == 'High', 3500 * Opportunity.of_Exterior_Doors_num__c, 0)))}" />
+    <apex:variable var="totalLandscapingCosts" value="{!IF(Opportunity.Landscape__c == 'Low', 2000, IF(Opportunity.Landscape__c == 'Medium', 5000, IF(Opportunity.Landscape__c == 'High', 10000, 0)))}" />
+    <apex:variable var="totalMiscellaneousCosts" value="{!IF(Opportunity.Miscellaneous__c == 'Low', 5000, IF(Opportunity.Miscellaneous__c == '8000', 3000, IF(Opportunity.Miscellaneous__c == 'High', 10000, 0)))}" />
+    
     <apex:pageBlock >
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
@@ -10,8 +35,8 @@
             <apex:outputLabel value="Soft Costs:" />
           </apex:column>
           <apex:column headerValue="Level of Work" styleClass="level" width="75">
-            <apex:selectList value="{!Opportunity.Soft_Costs__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theSoftCosts" />
+            <apex:selectList value="{!Opportunity.Soft_Costs__c}" size="1" >
+              <apex:actionSupport event="onchange" rerender="theSoftCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -23,23 +48,30 @@
           </apex:column>
           <apex:column headerValue="Cost" styleClass="cost" width="75">
             <apex:outputPanel id="theSoftCosts">
-              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'Low'}" value="$1,500" />
-              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'Medium'}" value="$3,000" />
-              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'High'}" value="$5,000" />
-            </apex:outputPanel>
-          </apex:column>
+              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!1500}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!3000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Soft_Costs__c == 'High'}" value="${0,number,#,##0}">
+                <apex:param value="{!5000}" />
+              </apex:outputText>
+           </apex:outputPanel>
+           </apex:column>
         </tr>
       </apex:pageBlockTable>
       
-      <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
+       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
           <apex:column styleClass="item" width="75">
             <apex:outputLabel value="Demo:" />
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Demo__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theDemoCosts" />
+              <apex:actionSupport event="onchange" rerender="theDemoCosts, totalTable"/>
               <apex:selectOption itemLabel="None" itemValue="0"/>
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -50,7 +82,8 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theDemoCosts">
-              <apex:outputText rendered="{!Opportunity.Demo__c == 'None'}" value="$0" />
+              <apex:outputText rendered="{!Opportunity.Demo__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
               <apex:outputText rendered="{!Opportunity.Demo__c == 'Low'}" value="${0,number,#,##0}">
                   <apex:param value="{!ROUND(Opportunity.Sqft__c * 2.0,0)}" />
               </apex:outputText>
@@ -65,15 +98,14 @@
         </tr>
       </apex:pageBlockTable>
       
-      
-      <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
+            <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
           <apex:column styleClass="item" width="75">
             <apex:outputLabel value="Foundation:" />
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Foundation__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theFoundationCosts" />
+              <apex:actionSupport event="onchange" rerender="theFoundationCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -106,7 +138,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Roof__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theRoofCosts" />
+              <apex:actionSupport event="onchange" rerender="theRoofCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -117,10 +149,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theRoofCosts">
-              <apex:outputText rendered="{!Opportunity.Roof__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Roof__c == 'Low'}" value="$1,000" />
-              <apex:outputText rendered="{!Opportunity.Roof__c == 'Medium'}" value="$8,000" />
-              <apex:outputText rendered="{!Opportunity.Roof__c == 'High'}" value="$15,000" />
+              <apex:outputText rendered="{!Opportunity.Roof__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Roof__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!1000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Roof__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!8000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Roof__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!15000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -133,7 +172,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Gutters__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theGutterCosts" />
+              <apex:actionSupport event="onchange" rerender="theGutterCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -144,10 +183,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theGutterCosts">
-              <apex:outputText rendered="{!Opportunity.Gutters__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Gutters__c == 'Low'}" value="$500" />
-              <apex:outputText rendered="{!Opportunity.Gutters__c == 'Medium'}" value="$1,500" />
-              <apex:outputText rendered="{!Opportunity.Gutters__c == 'High'}" value="$3,000" />
+              <apex:outputText rendered="{!Opportunity.Gutters__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Gutters__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!500}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Gutters__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!1500}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Gutters__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!3000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -160,7 +206,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.HVAC_and_Water_Heater__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theHVACandWaterHeaterCosts" />
+              <apex:actionSupport event="onchange" rerender="theHVACandWaterHeaterCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -171,10 +217,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theHVACandWaterHeaterCosts">
-              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'Low'}" value="$2,000" />
-              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'Medium'}" value="$3,500" />
-              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'High'}" value="$8,000" />
+              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!2000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!3500}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.HVAC_and_Water_Heater__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!8000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -187,7 +240,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Windows__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theWindowCosts" />
+              <apex:actionSupport event="onchange" rerender="theWindowCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -195,16 +248,17 @@
             </apex:selectList>
           </apex:column>
           <apex:column styleClass="units" width="75">
-              <apex:inputText value="{!Opportunity.of_Windows_num__c}" size="3" onchange="updateCost(this);" />
+              <apex:inputText value="{!Opportunity.of_Windows_num__c}" size="3">
+                <apex:actionSupport event="onchange" rerender="theWindowCosts, totalTable" />
+              </apex:inputText>
           </apex:column>
           <apex:column styleClass="cost" width="75">
-            <apex:outputPanel id="theWindowCosts">
-              <apex:outputText value="{!Opportunity.WindowCost__c}">
-                <span data-cost="{!Opportunity.WindowCost__c}" class="amount">
-                  {!Opportunity.WindowCost__c}
-                </span>
-              </apex:outputText>
-            </apex:outputPanel>
+              <apex:variable var="windowCost" value="{!IF(Opportunity.Windows__c  == 'Low', 400 * Opportunity.of_Windows_num__c, IF(Opportunity.Windows__c  == 'Medium',  800 * Opportunity.of_Windows_num__c, IF(Opportunity.Windows__c  == 'High',  1200 * Opportunity.of_Windows_num__c, 0)))}" />
+              <apex:outputPanel id="theWindowCosts">
+                  <apex:outputText rendered="{!Opportunity.Windows__c != 'None' && windowCost != 0}" value="${0,number,#,##0}">
+                    <apex:param value="{!windowCost}" />
+                  </apex:outputText>
+              </apex:outputPanel>
           </apex:column>
         </tr>
       </apex:pageBlockTable>
@@ -216,7 +270,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Insulation__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theInsulationCosts" />
+              <apex:actionSupport event="onchange" rerender="theInsulationCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -249,7 +303,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Siding__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theSidingCosts" />
+              <apex:actionSupport event="onchange" rerender="theSidingCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -282,7 +336,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Concrete__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theConcreteCosts" />
+              <apex:actionSupport event="onchange" rerender="theConcreteCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -293,10 +347,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theConcreteCosts">
-              <apex:outputText rendered="{!Opportunity.Concrete__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Concrete__c == 'Low'}" value="$1,500" />
-              <apex:outputText rendered="{!Opportunity.Concrete__c == 'Medium'}" value="$4,000" />
-              <apex:outputText rendered="{!Opportunity.Concrete__c == 'High'}" value="$10,000" />
+              <apex:outputText rendered="{!Opportunity.Concrete__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Concrete__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!1500}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Concrete__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!4000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Concrete__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!10000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -309,7 +370,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Electrical__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theElectricalCosts" />
+              <apex:actionSupport event="onchange" rerender="theElectricalCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -342,7 +403,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Plumbing__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="thePlumbingCosts" />
+              <apex:actionSupport event="onchange" rerender="thePlumbingCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -375,7 +436,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Framing__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theFramingCosts" />
+              <apex:actionSupport event="onchange" rerender="theFramingCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -408,7 +469,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Sheetrock__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theSheetRockCosts" />
+              <apex:actionSupport event="onchange" rerender="theSheetRockCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -441,7 +502,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Flooring__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theFlooringCosts" />
+              <apex:actionSupport event="onchange" rerender="theFlooringCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -474,7 +535,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Kitchen__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theKitchenCosts" />
+              <apex:actionSupport event="onchange" rerender="theKitchenCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -485,10 +546,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theKitchenCosts">
-              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'Low'}" value="$7,000" />
-              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'Medium'}" value="$15,000" />
-              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'High'}" value="$25,000" />
+              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!7000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!15000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Kitchen__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!25000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -501,7 +569,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Baths__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theBathCosts" />
+              <apex:actionSupport event="onchange" rerender="theBathCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -527,6 +595,7 @@
         </tr>
       </apex:pageBlockTable>
       
+      
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
           <apex:column styleClass="item" width="75">
@@ -534,7 +603,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Interior_Paint__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theInteriorPaintCosts" />
+              <apex:actionSupport event="onchange" rerender="theInteriorPaintCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -567,7 +636,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Exterior_Paint__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theExteriorPaintCosts" />
+              <apex:actionSupport event="onchange" rerender="theExteriorPaintCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -593,63 +662,66 @@
         </tr>
       </apex:pageBlockTable>
       
+    <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
+        <tr>
+            <apex:column styleClass="item" width="75">
+                <apex:outputLabel value="Interior Doors:" />
+            </apex:column>
+            <apex:column styleClass="level" width="75">
+                <apex:selectList value="{!Opportunity.Interior_Doors__c}" size="1">
+                    <apex:actionSupport event="onchange" rerender="theInteriorDoorCosts, totalTable" />
+                    <apex:selectOption itemLabel="None" itemValue="0" />
+                    <apex:selectOption itemLabel="Low" itemValue="Low" />
+                    <apex:selectOption itemLabel="Medium" itemValue="Medium" />
+                    <apex:selectOption itemLabel="High" itemValue="High" />
+                </apex:selectList>
+            </apex:column>
+            <apex:column styleClass="units" width="75">
+                <apex:inputText value="{!Opportunity.of_Interior_Doors_num__c}" size="3">
+                    <apex:actionSupport event="onchange" rerender="theInteriorDoorCosts, totalTable" />
+                </apex:inputText>
+            </apex:column>
+            <apex:column styleClass="cost" width="75">
+                <apex:variable var="interiorDoorCost" value="{!IF(Opportunity.Interior_Doors__c  == 'Low', 200 * Opportunity.of_Interior_Doors_num__c, IF(Opportunity.Interior_Doors__c  == 'Medium',  400 * Opportunity.of_Interior_Doors_num__c, IF(Opportunity.Interior_Doors__c  == 'High',  600 * Opportunity.of_Interior_Doors_num__c, 0)))}" />
+                <apex:outputPanel id="theInteriorDoorCosts">
+                    <apex:outputText rendered="{!Opportunity.Interior_Doors__c != 'None' && interiorDoorCost != 0}" value="${0,number,#,##0}">
+                        <apex:param value="{!interiorDoorCost}" />
+                    </apex:outputText>
+                </apex:outputPanel>
+            </apex:column>
+        </tr>
+    </apex:pageBlockTable>
+
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
-          <apex:column styleClass="item" width="75">
-            <apex:outputLabel value="Interior Doors:" />
-          </apex:column>
-          <apex:column styleClass="level" width="75">
-            <apex:selectList value="{!Opportunity.Interior_Doors__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theInteriorDoorCosts" />
-              <apex:selectOption itemLabel="None" itemValue="0" />
-              <apex:selectOption itemLabel="Low" itemValue="Low" />
-              <apex:selectOption itemLabel="Medium" itemValue="Medium" />
-              <apex:selectOption itemLabel="High" itemValue="High" />
-            </apex:selectList>
-          </apex:column>
-          <apex:column styleClass="units" width="75">
-            <apex:inputText value="{!Opportunity.of_Interior_Doors_num__c}" size="3" onchange="updateCost(this);" />
-          </apex:column>
-          <apex:column styleClass="cost" width="75">
-            <apex:outputPanel id="theInteriorDoorCosts">
-              <apex:outputText value="{!Opportunity.InteriorDoorCost__c}">
-                <span data-cost="{!Opportunity.InteriorDoorCost__c}" class="amount">
-                    {!Opportunity.InteriorDoorCost__c}
-                </span>
-              </apex:outputText>
-            </apex:outputPanel>
-          </apex:column>
+            <apex:column styleClass="item" width="75">
+                <apex:outputLabel value="Exterior Doors:" />
+            </apex:column>
+            <apex:column styleClass="level" width="75">
+                <apex:selectList value="{!Opportunity.Exterior_Doors__c}" size="1">
+                    <apex:actionSupport event="onchange" rerender="theExteriorDoorCosts, totalTable" />
+                    <apex:selectOption itemLabel="None" itemValue="0" />
+                    <apex:selectOption itemLabel="Low" itemValue="Low" />
+                    <apex:selectOption itemLabel="Medium" itemValue="Medium" />
+                    <apex:selectOption itemLabel="High" itemValue="High" />
+                </apex:selectList>
+            </apex:column>
+            <apex:column styleClass="units" width="75">
+                <apex:inputText value="{!Opportunity.of_Exterior_Doors_num__c}" size="3">
+                    <apex:actionSupport event="onchange" rerender="theExteriorDoorCosts, totalTable" />
+                </apex:inputText>
+            </apex:column>
+            <apex:column styleClass="cost" width="75">
+                <apex:variable var="exteriorDoorCost" value="{!IF(Opportunity.Exterior_Doors__c  == 'Low', 800 * Opportunity.of_Exterior_Doors_num__c, IF(Opportunity.Exterior_Doors__c  == 'Medium',  1200 * Opportunity.of_Exterior_Doors_num__c, IF(Opportunity.Exterior_Doors__c  == 'High',  3500 * Opportunity.of_Exterior_Doors_num__c, 0)))}" />
+                <apex:outputPanel id="theExteriorDoorCosts">
+                    <apex:outputText rendered="{!Opportunity.Exterior_Doors__c != 'None' && exteriorDoorCost != 0}" value="${0,number,#,##0}">
+                        <apex:param value="{!exteriorDoorCost}" />
+                    </apex:outputText>
+                </apex:outputPanel>
+            </apex:column>
         </tr>
-      </apex:pageBlockTable>
+    </apex:pageBlockTable>
       
-      <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
-        <tr>
-          <apex:column styleClass="item" width="75">
-            <apex:outputLabel value="Exterior Doors:" />
-          </apex:column>
-          <apex:column styleClass="level" width="75">
-            <apex:selectList value="{!Opportunity.Exterior_Doors__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theExteriorDoorCosts" />
-              <apex:selectOption itemLabel="None" itemValue="0" />
-              <apex:selectOption itemLabel="Low" itemValue="Low" />
-              <apex:selectOption itemLabel="Medium" itemValue="Medium" />
-              <apex:selectOption itemLabel="High" itemValue="High" />
-            </apex:selectList>
-          </apex:column>
-          <apex:column styleClass="units" width="75">
-            <apex:inputText value="{!Opportunity.of_Exterior_Doors_num__c}" size="3" onchange="updateCost(this);" />
-          </apex:column>
-          <apex:column styleClass="cost" width="75">
-            <apex:outputPanel id="theExteriorDoorCosts">
-              <apex:outputText value="{!Opportunity.ExteriorDoorCost__c}">
-                <span data-cost="{!Opportunity.ExteriorDoorCost__c}" class="amount">
-                    {!Opportunity.ExteriorDoorCost__c}
-                </span>
-              </apex:outputText>
-            </apex:outputPanel>
-          </apex:column>
-        </tr>
-      </apex:pageBlockTable>
       
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
@@ -658,7 +730,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Garage_Doors__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theGarageDoorCosts" />
+              <apex:actionSupport event="onchange" rerender="theGarageDoorCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -683,7 +755,7 @@
           </apex:column>
         </tr>
       </apex:pageBlockTable>
-      
+            
       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
         <tr>
           <apex:column styleClass="item" width="75">
@@ -691,7 +763,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Landscape__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theLandscapingCosts" />
+              <apex:actionSupport event="onchange" rerender="theLandscapingCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -702,10 +774,17 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theLandscapingCosts">
-              <apex:outputText rendered="{!Opportunity.Landscape__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Landscape__c == 'Low'}" value="$2,000" />
-              <apex:outputText rendered="{!Opportunity.Landscape__c == 'Medium'}" value="$5,000" />
-              <apex:outputText rendered="{!Opportunity.Landscape__c == 'High'}" value="$10,000" />
+              <apex:outputText rendered="{!Opportunity.Landscape__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Landscape__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!2000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Landscape__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!5000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Landscape__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!10000}" />
+              </apex:outputText>
             </apex:outputPanel>
           </apex:column>
         </tr>
@@ -718,7 +797,7 @@
           </apex:column>
           <apex:column styleClass="level" width="75">
             <apex:selectList value="{!Opportunity.Miscellaneous__c}" size="1">
-              <apex:actionSupport event="onchange" rerender="theMiscellaneousCosts" />
+              <apex:actionSupport event="onchange" rerender="theMiscellaneousCosts, totalTable" />
               <apex:selectOption itemLabel="None" itemValue="0" />
               <apex:selectOption itemLabel="Low" itemValue="Low" />
               <apex:selectOption itemLabel="Medium" itemValue="Medium" />
@@ -729,36 +808,43 @@
           </apex:column>
           <apex:column styleClass="cost" width="75">
             <apex:outputPanel id="theMiscellaneousCosts">
-              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'None'}" value="$0" />
-              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'Low'}" value="$5,000" />
-              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'Medium'}" value="$8,000" />
-              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'High'}" value="$10,000" />
+              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'None'}" value="${0,number,#,##0}"/>
+                  <apex:param value="{!0}" />
+              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'Low'}" value="${0,number,#,##0}">
+                  <apex:param value="{!5000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'Medium'}" value="${0,number,#,##0}">
+                  <apex:param value="{!8000}" />
+              </apex:outputText>
+              <apex:outputText rendered="{!Opportunity.Miscellaneous__c == 'High'}" value="${0,number,#,##0}">
+                  <apex:param value="{!10000}" />
+              </apex:outputText>
            </apex:outputPanel>
           </apex:column>
         </tr>
       </apex:pageBlockTable>
-    <apex:actionRegion >
-      <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2">
+      
+       <apex:pageBlockTable value="{!Opportunity}" var="opp" columnClasses="item, level, units, cost" rows="2" id="totalTable">
         <tr>
-          <apex:column styleClass="item" width="75"> 
+          <apex:column styleClass="item" width="75">
           </apex:column>
           <apex:column styleClass="level" width="75">
           </apex:column>
-          <apex:column style="text-align: right" width="75">
-            <apex:outputLabel value="Total:"/>
+          <apex:column styleClass="units" width="75" style="text-align:right;">
+            <apex:outputText value="Total:" />
           </apex:column>
           <apex:column styleClass="cost" width="75">
-            <apex:outputPanel id="totalCostPanel">
-              <apex:outputText value="total">
+              <apex:outputPanel id="theTotalCost">
+              <apex:outputText value="${0,number,#,##0}">
+                <apex:param value="{!totalSoftCosts + totalDemoCosts + totalFoundationCosts + totalRoofCosts + totalGutterCosts + totalHVACandWaterHeaterCosts + totalWindowCosts + totalInsulationCosts + totalSidingCosts + totalConcreteCosts + totalElectricalCosts + totalPlumbingCosts + totalFramingCosts + totalSheetrockCosts + totalFlooringCosts + totalKitchenCosts + totalBathCosts + totalInteriorPaint + totalExteriorPaint + totalInteriorDoorCosts + totalExteriorDoorCosts + totalLandscapingCosts + totalMiscellaneousCosts}" />
               </apex:outputText>
-            </apex:outputPanel>
-          </apex:column>
-        </tr>
-      </apex:pageBlockTable>
-     </apex:actionRegion>
+              </apex:outputPanel>
+         </apex:column>
+       </tr>
+     </apex:pageBlockTable>
     </apex:pageBlock>
-  </apex:form>
-<script>
+   </apex:form>
+  <script>
     function updateCost(input) {
       var row = input.closest('tr');
       var costColumn = row.querySelector('.cost .amount');
